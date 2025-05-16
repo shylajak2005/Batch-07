@@ -1,0 +1,56 @@
+import pandas as pd
+
+# Create dataset as a list of dictionaries
+data = [
+    {"HouseID": 1, "Location": "Downtown", "Size(sqft)": 1200, "Bedrooms": 3, "Bathrooms": 2, "YearBuilt": 2005, "Garage": 1, "DistanceToCityCenter(km)": 2.5, "Price": 275000},
+    {"HouseID": 2, "Location": "Suburb", "Size(sqft)": 2000, "Bedrooms": 4, "Bathrooms": 2, "YearBuilt": 2010, "Garage": 1, "DistanceToCityCenter(km)": 10.0, "Price": 320000},
+    {"HouseID": 3, "Location": "Countryside", "Size(sqft)": 1800, "Bedrooms": 3, "Bathrooms": 1, "YearBuilt": 1995, "Garage": 0, "DistanceToCityCenter(km)": 30.2, "Price": 215000},
+    {"HouseID": 4, "Location": "Coastal", "Size(sqft)": 2500, "Bedrooms": 5, "Bathrooms": 3, "YearBuilt": 2018, "Garage": 1, "DistanceToCityCenter(km)": 5.0, "Price": 410000},
+    {"HouseID": 5, "Location": "Mountain", "Size(sqft)": 1400, "Bedrooms": 2, "Bathrooms": 1, "YearBuilt": 1980, "Garage": 0, "DistanceToCityCenter(km)": 40.0, "Price": 180000},
+    {"HouseID": 6, "Location": "Downtown", "Size(sqft)": 3000, "Bedrooms": 4, "Bathrooms": 3, "YearBuilt": 2020, "Garage": 1, "DistanceToCityCenter(km)": 1.0, "Price": 480000},
+    {"HouseID": 7, "Location": "Suburb", "Size(sqft)": 1600, "Bedrooms": 3, "Bathrooms": 2, "YearBuilt": 2000, "Garage": 1, "DistanceToCityCenter(km)": 12.5, "Price": 290000},
+    {"HouseID": 8, "Location": "Countryside", "Size(sqft)": 2200, "Bedrooms": 4, "Bathrooms": 2, "YearBuilt": 1990, "Garage": 0, "DistanceToCityCenter(km)": 35.0, "Price": 240000},
+    {"HouseID": 9, "Location": "Coastal", "Size(sqft)": 2800, "Bedrooms": 5, "Bathrooms": 3, "YearBuilt": 2015, "Garage": 1, "DistanceToCityCenter(km)": 6.0, "Price": 420000},
+    {"HouseID": 10, "Location": "Mountain", "Size(sqft)": 1000, "Bedrooms": 2, "Bathrooms": 1, "YearBuilt": 1975, "Garage": 0, "DistanceToCityCenter(km)": 45.0, "Price": 160000},
+]
+
+# Convert to DataFrame
+df = pd.DataFrame(data)
+
+# Save to CSV
+df.to_csv("forecast_house_prices_sample.csv", index=False)
+
+print("CSV file saved as 'forecast_house_prices_sample.csv'")import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load dataset
+df = pd.read_csv("forecast_house_prices_sample.csv")
+
+# Set style
+sns.set(style="whitegrid")
+
+# Plot 1: Price vs Size
+plt.figure(figsize=(8, 6))
+sns.scatterplot(data=df, x="Size(sqft)", y="Price", hue="Location", palette="Set2")
+plt.title("House Price vs. Size (sqft)")
+plt.xlabel("Size (sqft)")
+plt.ylabel("Price")
+plt.tight_layout()
+plt.show()
+
+# Plot 2: Price by Location
+plt.figure(figsize=(8, 6))
+sns.boxplot(data=df, x="Location", y="Price", palette="Set3")
+plt.title("House Price Distribution by Location")
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Plot 3: Correlation heatmap
+plt.figure(figsize=(8, 6))
+numeric_df = df.select_dtypes(include=["int64", "float64"])
+sns.heatmap(numeric_df.corr(), annot=True, cmap="coolwarm", fmt=".2f")
+plt.title("Correlation Heatmap")
+plt.tight_layout()
+plt.show()
